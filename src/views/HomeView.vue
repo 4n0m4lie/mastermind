@@ -2,12 +2,14 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useGame } from '../services/game';
 import router from "@/router/index.js";
+import { provide } from 'vue';
 
 const { code, generateCode } = useGame();
 const pseudo = ref('');
 let intervalId = null;
 
 const submitPseudo = () => {
+  provide("pseudo", pseudo);
   // Logique pour gérer le pseudo (par exemple, le stocker ou le rediriger vers une autre route)
   console.log(`Pseudo: ${pseudo.value}`);
   router.push('/game');
@@ -21,6 +23,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   clearInterval(intervalId); // Nettoyer l'intervalle en quittant la vue
 });
+
 </script>
 
 <template>
