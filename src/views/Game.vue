@@ -1,4 +1,3 @@
-vue
 <template>
   <div class="game">
     <h1>Bienvenue {{ pseudo }}</h1>
@@ -26,8 +25,8 @@ const { code, state, validateAttempt } = useGame();
 const currentAttempt = ref('');
 const results = ref([]);
 
-const submitAttempt = () => {
-  const attemptArray = currentAttempt.value.split('').map(Number);
+const submitAttempt = (value) => {
+  const attemptArray = value.split('').map(Number);
   const result = validateAttempt(attemptArray);
   results.value.push({ attempt: currentAttempt.value, ...result });
   currentAttempt.value = ''; // Réinitialiser l'entrée
