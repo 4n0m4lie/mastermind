@@ -21,7 +21,7 @@ import { useGame } from '../services/game';
 import CodeField from './CodeField.vue'; // Importer le composant CodeField
 
 const pseudo = inject('pseudo');
-const { code, state, validateAttempt } = useGame();
+let { code, state, validateAttempt } = useGame();
 const currentAttempt = ref('');
 const results = ref([]);
 
@@ -29,11 +29,15 @@ const submitAttempt = (value) => {
   const attemptArray = value.split('').map(Number);
   const result = validateAttempt(attemptArray);
   results.value.push({ attempt: currentAttempt.value, ...result });
+  if(state.value === 'gagnée' || state.value === 'perdue'){
+
+    localStorage.setItem('score','"' + pseudo.value +'":{ nombreChercher: "'+ code.value +'", state: "' + state.value + '", nbtry: ' + results.value.length + '}');
+    console.log(localStorage.getItem('score'))
+  }
   currentAttempt.value = ''; // Réinitialiser l'entrée
 };
 
 const restartGame = () => {
-  // Logique pour redémarrer le jeu
   results.value = [];
   state.value = 'en cours';
 };
