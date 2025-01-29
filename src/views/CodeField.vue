@@ -2,7 +2,7 @@ vue
 <template>
   <div>
     <div class="input-container">
-      <input
+      <input v-on:keyup.enter="submit"
         v-for="(input, index) in inputs"
         :key="index"
         v-model="inputs[index]"
