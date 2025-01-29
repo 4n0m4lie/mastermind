@@ -2,14 +2,15 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { useGame } from '../services/game';
 import router from "@/router/index.js";
-import { provide } from 'vue';
+import { inject, provide } from 'vue';
 
 const { code, generateCode } = useGame();
-const pseudo = ref('');
+const pseudo = inject("pseudo")
+const pseudoInput = ref('');
 let intervalId = null;
 
 const submitPseudo = () => {
-  provide("pseudo", pseudo);
+  pseudo.value = pseudoInput.value;
   // Logique pour gérer le pseudo (par exemple, le stocker ou le rediriger vers une autre route)
   console.log(`Pseudo: ${pseudo.value}`);
   router.push('/game');
@@ -34,7 +35,7 @@ onBeforeUnmount(() => {
     </header>
     <p>Règles du jeu : Devinez le code à 4 chiffres uniques en 10 tentatives.</p>
     <form @submit.prevent="submitPseudo">
-      <input v-model="pseudo" placeholder="Entrez votre pseudo" required />
+      <input v-model="pseudoInput" placeholder="Entrez votre pseudo" required />
       <button type="submit">Jouer</button>
     </form>
   </div>
