@@ -19,12 +19,16 @@ export function useGame() {
   };
 
   const validateAttempt = (attempt) => {
-    const correctPosition = attempt.filter((digit, index) => digit === code.value[index]).length;
-    const correctDigits = attempt.filter(digit => code.value.includes(digit)).length;
-    const wrongPosition = correctDigits - correctPosition;
-
-
-    console.log(code);
+    let correctPosition = 0;
+    let wrongPosition = 0;
+    for (let i = 0; i < attempt.length; i++) {
+      console.log('Code: '+code.value[i]+', Attempt: '+ attempt[i])
+      if (attempt[i] == code.value[i]) {
+        correctPosition++;
+      } else if (code.value.includes(attempt[i])) {
+        wrongPosition++;
+      }
+    }
 
     attempts.value.push(attempt);
 
